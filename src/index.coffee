@@ -60,12 +60,11 @@ class MachinePoker extends EventEmitter
           console.log player.name + ": " + player.total
       @players.forEach (player) ->
         if player.total
-          p.total += p.payout;
+          player.total += player.payout;
         else
-          p.total = p.payout
-        p.chips = 1000;
-      numPlayer = (@players.filter (p) -> p.chips > 0).length
-      if @currentRound > @maxRounds or numPlayer < 2
+          player.total = player.payout
+        player.chips = 1000;
+      if @currentRound > @maxRounds
         @emit 'tournamentComplete', @players
         @_close()
       else
