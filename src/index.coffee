@@ -53,6 +53,17 @@ class MachinePoker extends EventEmitter
     game.once 'complete', (status) =>
       @emit 'complete', game.status(Game.STATUS.PRIVILEGED)
       @currentRound++
+      if @currentRound % 10000 == 0
+        console.log "\n\n\n\nround: " + @currentRound
+        console.log "===================================="
+        @players.forEach (player) ->
+          console.log player.name + ": " + player.total
+      @players.forEach (player) ->
+        if player.total
+          p.total += p.payout;
+        else
+          p.total = p.payout
+        p.chips = 1000;
       numPlayer = (@players.filter (p) -> p.chips > 0).length
       if @currentRound > @maxRounds or numPlayer < 2
         @emit 'tournamentComplete', @players
